@@ -138,13 +138,16 @@ public class LetterTileDrawable extends Drawable {
         canvas.drawRect(getBounds(), sPaint);
 
         // Draw letter/digit only if the first character is an english letter
-        if (mDisplayName != null && isEnglishLetter(mDisplayName.charAt(0))) {
+        if (mDisplayName != null) {
             // Draw letter or digit.
             sFirstChar[0] = Character.toUpperCase(mDisplayName.charAt(0));
 
             // Scale text by canvas bounds and user selected scaling factor
             final int minDimension = Math.min(getBounds().width(), getBounds().height());
-            sPaint.setTextSize(mScale * sLetterToTileRatio * minDimension);
+            if (isChineseLetter(sFirstChar[0]))
+                sPaint.setTextSize(mScale * sLetterToTileRatio * minDimension * 0.8f);
+            else
+                sPaint.setTextSize(mScale * sLetterToTileRatio * minDimension);
             //sPaint.setTextSize(sTileLetterFontSize);
             sPaint.getTextBounds(sFirstChar, 0, 1, sRect);
             sPaint.setColor(sTileFontColor);
@@ -192,6 +195,10 @@ public class LetterTileDrawable extends Drawable {
 
     private static boolean isEnglishLetter(final char c) {
         return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
+    }
+
+    private static boolean isChineseLetter(final char c) {
+        return String.valueOf(c).matches("[\u4E00-\u9FA5]");
     }
 
     @Override

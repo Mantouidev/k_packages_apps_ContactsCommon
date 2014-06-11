@@ -695,7 +695,6 @@ class ContactPhotoManagerImpl extends ContactPhotoManager implements Callback {
                 createAndApplyDefaultImageForUri(view, photoUri, requestedExtent, darkTheme,
                         defaultProvider);
             } else {
-
                 loadPhotoByIdOrUri(view, Request.createFromUri(photoUri, requestedExtent,
                         darkTheme, defaultProvider));
             }
